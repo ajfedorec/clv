@@ -469,7 +469,7 @@ def compute_rel_abun(x):
     return p
 
 
-@timeout(5)
+# @timeout(5)
 def predict(x, u, times, A, g, B):
     """Make predictions from initial conditions
     """

@@ -6,6 +6,7 @@ from generalized_lotka_volterra import GeneralizedLotkaVolterra
 from linear_alr import LinearALR
 from linear_rel_abun import LinearRelAbun
 
+
 def fit_clv(observations, time_points, effects, held_out_observations, held_out_time_points, held_out_effects, using_rel_abun=False, ret_params=False, folds=None):
     # if observations are concentrations
     rel_abun = []
@@ -16,10 +17,10 @@ def fit_clv(observations, time_points, effects, held_out_observations, held_out_
 
     if not using_rel_abun:
         for obs in observations:
-            rel_abun.append(obs / obs.sum(axis=1,keepdims=True))
+            rel_abun.append(obs / obs.sum(axis=1, keepdims=True))
 
         for obs in held_out_observations:
-            held_out_rel_abun.append(obs / obs.sum(axis=1,keepdims=True))
+            held_out_rel_abun.append(obs / obs.sum(axis=1, keepdims=True))
 
     else:
         rel_abun = observations
@@ -28,7 +29,7 @@ def fit_clv(observations, time_points, effects, held_out_observations, held_out_
     clv = CompositionalLotkaVolterra(rel_abun, time_points, effects)
     clv.train(folds=folds)
  
-    predictions = [clv.predict(o[0],tpts,e) for (o,tpts,e) in zip(held_out_rel_abun, held_out_time_points, held_out_effects)]
+    predictions = [clv.predict(o[0], tpts, e) for (o, tpts, e) in zip(held_out_rel_abun, held_out_time_points, held_out_effects)]
 
     return predictions
 
